@@ -446,7 +446,8 @@
 
         function generateResult(periodId) {
             const t = advancedSeed(Number(periodId)) % 10;
-            let size = t >= 5 ? "BIG" : "SMALL";
+            // Modifed logic: Swapped BIG and SMALL
+            let size = t >= 5 ? "SMALL" : "BIG";
             let color = "";
             
             if (0 === t) color = "RED + VIOLET";
@@ -498,7 +499,8 @@
             textPanel.className = "prediction-box";
             textPanel.innerText = calc.size;
 
-            // Apply direct color criteria switches requested
+            // Apply direct color criteria switches
+            // If result is SMALL, show Green/Status-Big (reversed as requested)
             if (calc.size === "BIG") {
                 textPanel.classList.add("status-big");
             } else {
