@@ -446,8 +446,7 @@
 
         function generateResult(periodId) {
             const t = advancedSeed(Number(periodId)) % 10;
-            // Modifed logic: Swapped BIG and SMALL
-            let size = t >= 5 ? "SMALL" : "BIG";
+            let size = t >= 5 ? "BIG" : "SMALL";
             let color = "";
             
             if (0 === t) color = "RED + VIOLET";
@@ -495,13 +494,15 @@
             
             const calc = generateResult(periodId);
             
+            // Logic Reversed: BIG becomes SMALL, SMALL becomes BIG
+            const displaySize = calc.size === "BIG" ? "SMALL" : "BIG";
+            
             // Clean interface classes
             textPanel.className = "prediction-box";
-            textPanel.innerText = calc.size;
+            textPanel.innerText = displaySize;
 
-            // Apply direct color criteria switches
-            // If result is SMALL, show Green/Status-Big (reversed as requested)
-            if (calc.size === "BIG") {
+            // Apply direct color criteria switches (Updated for new logic)
+            if (displaySize === "BIG") {
                 textPanel.classList.add("status-big");
             } else {
                 textPanel.classList.add("status-small");
@@ -512,7 +513,7 @@
             entryRow.className = "history-item";
             
             const cutPeriod = periodId.slice(-4);
-            const coloredStatus = calc.size === "BIG" ? `<span style="color:#00ff77; font-weight:bold;">BIG</span>` : `<span style="color:#ff3344; font-weight:bold;">SMALL</span>`;
+            const coloredStatus = displaySize === "BIG" ? `<span style="color:#00ff77; font-weight:bold;">BIG</span>` : `<span style="color:#ff3344; font-weight:bold;">SMALL</span>`;
             
             entryRow.innerHTML = `<span>#${cutPeriod}</span> <span>${coloredStatus}</span>`;
             
